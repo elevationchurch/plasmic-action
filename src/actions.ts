@@ -15,9 +15,6 @@ export type Language = "js" | "ts" | "";
 export type Scheme = "codegen" | "loader" | "";
 export type SyncAction = "commit" | "pr" | "";
 
-const gitUserName = "Plasmic Bot";
-const gitUserEmail = "ops+git@plasmic.app";
-
 export type PlasmicActionOptions = {
   run: RunAction;
 
@@ -258,11 +255,19 @@ export class PlasmicAction {
     if (!this.args.title) {
       throw new Error("No commit title to use");
     }
+    
+    if (!this.args.gitUserName) {
+      throw new Error("No git username");
+    }
+    if (!this.args.gitUserEmail) {
+      throw new Error("No user email");
+    }
+    
     assertNoSingleQuotes(this.remote);
     const commitMessage = `${this.args.title}\n\n${this.args.description}`;
     await exec(`git add -A .`, this.opts);
-    await exec(`git config user.name '${gitUserName}'`, this.opts);
-    await exec(`git config user.email '${gitUserEmail}'`, this.opts);
+    await exec(`git config user.name '${this.args.gitUserName}'`, this.opts);
+    await exec(`git config user.email '${this.args.gitUserEmail}'`, this.opts);
 
     const { stdout: staged } = await exec(
       `git status --untracked-files=no --porcelain`,
