@@ -34,6 +34,8 @@ export type PlasmicActionOptions = {
   description: string;
 
   skipIfPlasmic: boolean;
+  gitUserEmail: string;
+  gitUserName: string;
 };
 
 export class PlasmicAction {
@@ -185,8 +187,8 @@ export class PlasmicAction {
         `git log -1 --pretty=format:'%ae'`,
         this.opts
       );
-      if (authorEmail.trim() === gitUserEmail) {
-        console.log("Skipping; last commit was made by Plasmic.");
+      if (authorEmail.trim() === this.args.gitUserEmail) {
+        console.log("Skipping; last commit was made by Digital Admin.");
         return "";
       }
     }
@@ -255,14 +257,14 @@ export class PlasmicAction {
     if (!this.args.title) {
       throw new Error("No commit title to use");
     }
-    
+
     if (!this.args.gitUserName) {
       throw new Error("No git username");
     }
     if (!this.args.gitUserEmail) {
       throw new Error("No user email");
     }
-    
+
     assertNoSingleQuotes(this.remote);
     const commitMessage = `${this.args.title}\n\n${this.args.description}`;
     await exec(`git add -A .`, this.opts);

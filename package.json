@@ -8,7 +8,7 @@
     "build": "tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
-    "all": "yarn install && npm run build && npm run format",
+    "all": "yarn install && yarn run build && yarn run format",
     "add-dist": "git add lib"
   },
   "pre-commit": [
@@ -25,7 +25,7 @@
     "node",
     "plasmic"
   ],
-  "author": "Plasmic <ops@plasmic.app>",
+  "author": "Elevation Digital <digital@elevationchurch.org>",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6",
