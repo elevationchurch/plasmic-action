@@ -52,7 +52,7 @@ export function mkPackageManagerCmds(cwd: string): PackageManagerCmds {
 }
 
 export function mkPrBranchName(targetBranch: string) {
-  return `plasmicops/${nanoid(8)}/${targetBranch}`;
+  return `plasmic-sync/${nanoid(8)}/${targetBranch}`;
 }
 
 export function setOutputs(outputs: Partial<Outputs>) {
