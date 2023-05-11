@@ -32,7 +32,9 @@ export function mkPackageManagerCmds(cwd: string): PackageManagerCmds {
     existsSync(path.join(cwd, "yarn.lock")) ||
     existsSync(path.join(".", "yarn.lock"));
 
-  const usePnpm = existsSync(path.join(cwd, "pnpm-lock.yaml"));
+  const usePnpm =
+    existsSync(path.join(cwd, "pnpm-lock.yaml")) ||
+    existsSync(path.join(".", "pnpm-lock.yaml"));
 
   if (useYarn) {
     const yarnVersion = execSync(`yarn --version`).toString().trim();
