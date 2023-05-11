@@ -32,6 +32,8 @@ export function mkPackageManagerCmds(cwd: string): PackageManagerCmds {
     existsSync(path.join(cwd, "yarn.lock")) ||
     existsSync(path.join(".", "yarn.lock"));
 
+  const usePnpm = existsSync(path.join(cwd, "pnpm-lock.yaml"));
+
   if (useYarn) {
     const yarnVersion = execSync(`yarn --version`).toString().trim();
     const is2 = semver.gte(yarnVersion, "2.0.0");
@@ -40,6 +42,15 @@ export function mkPackageManagerCmds(cwd: string): PackageManagerCmds {
       run: "yarn",
       add: is2 ? "yarn add" : "yarn add -W",
       cmd: "yarn",
+    };
+  }
+
+  if (usePnpm) {
+    return {
+      install: "pnpm",
+      run: "pnpm",
+      add: "pnpm add",
+      cmd: "pnpm",
     };
   }
 
