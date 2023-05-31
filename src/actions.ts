@@ -168,6 +168,7 @@ export class PlasmicAction {
       `${pm.cmd} plasmic sync --projects '${this.args.projectId}:${this.args.projectApiToken}' --yes`,
       this.opts
     );
+    await exec(`git checkout ../../pnpm-lock.yaml`, this.opts);
     return (await this.commit(newBranch || this.args.branch))
       ? newBranch
       : undefined;
